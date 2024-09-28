@@ -86,9 +86,9 @@ resource "aws_security_group" "devopsshack_node_sg" {
   }
 }
 
-resource "aws_eks_cluster" "devopsshack" {
-  name     = "devopsshack-cluster"
-  role_arn = aws_iam_role.devopsshack_cluster_role.arn
+resource "aws_eks_cluster" "rahul" {
+  name     = "rahul-cluster"
+  role_arn = aws_iam_role.rahul_cluster_role.arn
 
   vpc_config {
     subnet_ids         = aws_subnet.devopsshack_subnet[*].id
@@ -96,10 +96,10 @@ resource "aws_eks_cluster" "devopsshack" {
   }
 }
 
-resource "aws_eks_node_group" "devopsshack" {
-  cluster_name    = aws_eks_cluster.devopsshack.name
-  node_group_name = "devopsshack-node-group"
-  node_role_arn   = aws_iam_role.devopsshack_node_group_role.arn
+resource "aws_eks_node_group" "rahul" {
+  cluster_name    = aws_eks_cluster.rahul.name
+  node_group_name = "rahul-node-group"
+  node_role_arn   = aws_iam_role.rahul_node_group_role.arn
   subnet_ids      = aws_subnet.devopsshack_subnet[*].id
 
   scaling_config {
@@ -135,7 +135,7 @@ resource "aws_iam_role" "rahul_cluster_role" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "devopsshack_cluster_role_policy" {
+resource "aws_iam_role_policy_attachment" "rahul_cluster_role_policy" {
   role       = aws_iam_role.rahul_cluster_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
 }
@@ -159,17 +159,17 @@ resource "aws_iam_role" "rahul_node_group_role" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "devopsshack_node_group_role_policy" {
+resource "aws_iam_role_policy_attachment" "rahul_node_group_role_policy" {
   role       = aws_iam_role.rahul_node_group_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
 }
 
-resource "aws_iam_role_policy_attachment" "devopsshack_node_group_cni_policy" {
-  role       = aws_iam_role.devopsshack_node_group_role.name
+resource "aws_iam_role_policy_attachment" "rahul_node_group_cni_policy" {
+  role       = aws_iam_role.rahul_node_group_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
 }
 
-resource "aws_iam_role_policy_attachment" "devopsshack_node_group_registry_policy" {
+resource "aws_iam_role_policy_attachment" "rahul_node_group_registry_policy" {
   role       = aws_iam_role.rahul_node_group_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
 }
